@@ -46,7 +46,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
         return consume;
     }
 ```
-![](http://static.shaohui.me/view_dispatch.png)
+![](https://img.vistashao.com/view_dispatch.png)
 
 从这段伪代码中，我们可以看出来，在dispatchTouchEvent中，先调用ViewGroup自身的onInterceptTouchEvent方法，判断自己是否要拦截，如果这时候自己拦截，那就调用自己的onTouchEvent方法，如果onTouchEvent方法返回了True，那么这次的事件就算消耗了，事件传递到此为止，如果返回了False，证明这次没有消耗这次MotionEvent，那么这次的事件就会往上返回，由上一级继续处理；如果当前ViewGroup的onInterceptTouchEvent返回了False，那就会调用它的子view的dispatchTouchEvent方法，这样这个事件就传递下去了，如果它的子View处理不了，那么还会回来调用ViewGroup的onTouchEvent方法，当然这一点是没有在这一段伪代码里体现的，用一段通俗的例子解释：
 > 领导收到一份任务(有可能是上级给的)，自己看了一眼，然后决定好好休息，今天不工作，就把这个任务交给了手下的小王，小王的默认属性是只要来任务就接，而且就干，能干不能干一样接，如果这是一个简单的任务，那么小王就解决了，这个任务也就完成了，不幸的是，这次任务小王没有解决掉，然后向领导反馈，领导没办法，手下没人能解决，只好自己干了，就开始解决问题，然后解决掉，任务也完成了。
@@ -154,7 +154,7 @@ private void init() {
         }
     }
 ```
- ![](http://static.shaohui.me/veiw_gesture.gif)
+ ![](https://img.vistashao.com/veiw_gesture.gif)
  
  只贴了部分的代码，而且貌似旋转好像还有点问题，以后时间再修正，有用到的读者可以在详细了解下，完整代码，我会在文章的最后给出链接，同时感谢[Android multitouch gesture detectors](http://code.almeros.com/android-multitouch-gesture-detectors#.V6ILn9B96t9)的作者，提供了这么方便的手势操作类
  

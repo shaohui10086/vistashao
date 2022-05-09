@@ -79,7 +79,7 @@ public class SketchView extends View{
 	           {% endcodeblock %}
 
 MeasureSpce的mode有三种：EXACTLY, AT_MOST，UNSPECIFIED，除却UNSPECIFIED不谈，其他两种mode：当父布局是EXACTLY时，子控件确定大小或者match_parent，mode都是EXACTLY，子控件是wrap_content时，mode为AT_MOST；当父布局是AT_MOST时，子控件确定大小，mode为EXACTLY，子控件wrap_content或者match_parent时，mode为AT_MOST。所以在确定控件大小时，需要判断MeasureSpec的mode，不能直接用MeasureSpec的size。在进行一些逻辑处理以后，调用setMeasureDimension()方法，将测量得到的宽高传进去供layout使用。
-![measure](http://www.hdxhd.cn/view_onMeasure.png)
+![measure](https://img.vistashao.com/view_onMeasure.png)
 	
 > 需要明白的一点是 ,测量所得的宽高不一定是最后展示的宽高，最后宽高确定是在onLayout方法里，layou（left，top，right，bottom），不过一般都是一样的。
 	
@@ -180,7 +180,7 @@ public SketchView(Context context, AttributeSet attrs, int defStyleAttr) {
 
 (只贴了核心代码，完整代码会在文章最后给链接)
 可以看到在onDraw()方法里，我调用了canvas的drawCircle方法画了一个圆，圆心的位置是又画布的位置决定的，位于画布的中心，width和height参数是在onLayout()方法里拿到的，在此之前取到的height和width都是不准确的，这点要注意。圆的半径是xml文件中定义的size*scale，而这个scale是通过一个ValueAnimator确定的，变化范围是从1到2，ValueAnimator的值发生改变会赋给scale同时调用postInvalidate()方法，这个方法的作用就是重绘，然后圆的半径就会发生改变，这样刷新就会实现动画的效果。
-![自定义View](http://www.hdxhd.cn/sketch_view.gif)
+![自定义View](https://img.vistashao.com/sketch_view.gif)
 
 ### requstLayout和invidious
 

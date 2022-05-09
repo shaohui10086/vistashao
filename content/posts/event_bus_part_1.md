@@ -126,7 +126,7 @@ public class Example {
 ```
 别看这段代码有点长，其实主要就做了两件事，更新了两个最重要的Map：`subscriptionsByEventType`和`typesBySubscriber`，已备我们在后面`post`事件时使用。其中，前者保存了已`eventType`为键的所有相关的`subscription`。
 到这里为止，整个事件的订阅就结束了，我们拿到了什么？两个填充了必要数据的HashMap，接下来就是这两个HashMap发挥作用的时候了，预告一下这两个HashMap的作用，一个是用于发送事件，一个是用于取消订阅。整个的流程图大概就是整个样子(图片来自codeKK)，最后的Sticky事件不用理会，会在下篇再解释:
-![注册流程](http://static.shaohui.me/eventbus_register.png)
+![注册流程](https://img.vistashao.com/eventbus_register.png)
 ## 发送事件
 ```
     // 有关ThreadLocal，大家可以看其他的相关文章，不在这里展开，它是和线程绑定的
@@ -226,14 +226,14 @@ public class Example {
     }
 ```
 终于走到了最后，看到了`subscriber`的`subscriberMethod`最终通过反射的方式被执行，整个事件分发的过程也就到此结束了。整个函数流程图是这样的(图片来自codeKK):
-![EventBus发送事件](http://static.shaohui.me/eventbus_post.png)
+![EventBus发送事件](https://img.vistashao.com/eventbus_post.png)
 
 ## 取消订阅
 因为篇幅的原因，取消订阅的方法我们就不在这里展示，估计大家也能想到到：就是通过`typesBySubscriber`这个HashMap找到订阅者订阅的所有事件，然后在`subscriptionsByEventType`的各个事件订阅列表中将这个订阅者对应的订阅事件移除，最后再将订阅者从`typesBySubscriber`移除。
 
 ## 总结
 至此，简单的EventBus事件流就算解释清楚了，主要就是两个方法，一个是`register`，一个是`post`，分别用于注册保存`subscriber`和消息通知`subscriber`， 在注册的过程中，通过`subscriberMethodFinder`将`subscriber`中所有的订阅方法都找出来，并根据两种不同的规则分别按照`eventType`和`subscriber`将订阅方法缓存在`Map`中，以供后续的步骤使用；在`post`事件中，是以线程为单位的，将事件放入当前线程的消息队列中，然后依次循环取出发送，直至队列为空，按照事件的类型找到当前事件类型相关的`Subscription`列表，如果当前bus还支持事件继承的话，还会找到当前事件类型的父类和父类接口对应的`Subscription`列表，找到这样的订阅列表之后，顺序取出每一个`Subscription`，然后通过反射调用`subscriber`的订阅方法，至此，整个事件的传递就结束了。分析完整个流程之后，我们在看EventBus的类图(图片来自codeKK):
-![EventBus类图](http://static.shaohui.me/eventbus_class.png)
+![EventBus类图](https://img.vistashao.com/eventbus_class.png)
 依照这个图中，再回忆我们分析的整个过程:首先`EventBus`的实例都是依据`EventBusBuilder`创建的，我们可以自定义`EventBusBuilder`来达到定制`EventBus`的目的，`SubscriberMethodFinder`是用于找出订阅者中的所有的订阅方法，然后订阅方法和订阅者组成一个叫做`Subscription`的订阅事件，`EventBus`保存的就是`Subscription`的列表，类图下半部分我们会在下篇详细解释，在这里简单介绍下，最后执行订阅者的订阅方法时，不是简单的当前线程执行调用反射，而是根据订阅方法不同的`threadMode`选择不同的`Poster`将传递到目标线程然后在异步线程或者主线程执行
 
 大概就是这些内容，当然我们还省去三个很重要的点没有说清楚，那就是：SubscriberMethodFinder、ThreadMode、以及StickEvent，会在下篇详细介绍。

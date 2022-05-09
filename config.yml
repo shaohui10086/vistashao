@@ -38,8 +38,8 @@ params:
     comments: true
     hidemeta: false
     hideSummary: false
-    showtoc: false
-    tocopen: false
+    showtoc: true
+    tocopen: true
 
     assets:
         # disableHLJS: true # to disable highlight.js
@@ -51,9 +51,9 @@ params:
         safari_pinned_tab: "<link / abs url>"
 
     label:
-        text: "Home"
-        icon: /apple-touch-icon.png
-        iconHeight: 35
+        text: "vistashao"
+        # icon: /apple-touch-icon.png
+        # iconHeight: 35
 
     # profile-mode
     profileMode:
@@ -80,14 +80,16 @@ params:
           url: "https://twitter.com/tinyable"
         - name: github
           url: "https://github.com/shaohui10086"
+        - name: rss
+          url: "/index.xml"
 
     analytics:
-        google:
-            SiteVerificationTag: "XYZabc"
-        bing:
-            SiteVerificationTag: "XYZabc"
-        yandex:
-            SiteVerificationTag: "XYZabc"
+        # google:
+        #     SiteVerificationTag: "XYZabc"
+        # bing:
+        #     SiteVerificationTag: "XYZabc"
+        # yandex:
+        #     SiteVerificationTag: "XYZabc"
 
     cover:
         hidden: true # hide everywhere but not in structured data

@@ -75,7 +75,7 @@ new Thread(new Runnable() {
         }).start();
 ```
 可能会有人问，为什么我们平常使用的时候，没有感觉到这么复杂呢？因为在主线程中，系统自动帮我们完成了这些事，有兴趣的同学可以去看一下`ActivityThread`的`main()`方法，就会看到关于Looper的这两行代码也都是执行的了，主线程生而就已经开始了消息循环，用一个示意图表示:
-![ActivityThread示意](http://static.shaohui.me/handler_activity_thread.jpg)
+![ActivityThread示意](https://img.vistashao.com/handler_activity_thread.jpg)
 从上面这张图中，我们可以看到我们在Activity中写的代码也都是执行在一条最外层`Handler`的`dispatchMessage`方法里的，所以我们能随便创建Handler也就是理所当然的事情
 
 分析完源码之后，我们就大概理解了Looper的作用：开始一个无限循环，每次循环都试图从消息队列中取出下一条消息，然后进行相应的处理，下面我们分析消息队列的时候就会看到，当没有消息的时候，消息队列就会堵塞在那里，不返回消息，直到有新的消息进来，这时候Looper也会被堵塞在这里，直到有新的消息返回。Looper的角色就是一个任劳任怨的搬运工，因为它处理消息的过程都是在Looper内部，所以消息执行也就就是在Looper所在的线程，即Looper创建时所在的线程，这点很重要，它将最终解答我们最大的疑惑：为什么Handler在其他线程发送的消息最后处理都是在主线程处理？
