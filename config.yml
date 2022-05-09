@@ -21,7 +21,7 @@ params:
     title: 'vistashao 的自留地'
     description: ""
     keywords: [Blog, vistashao, 邵辉辉, 邵辉]
-    author: Me
+    author: vistashao
     # author: ["Me", "You"] # multiple authors
     images: ["<link or path of image for opengraph, twitter-cards>"]
     DateFormat: "January 2, 2006"
@@ -95,7 +95,7 @@ params:
         hiddenInSingle: true # hide on single page
 
     editPost:
-        URL: "https://github.com/shaohui10086/vistashao/content"
+        URL: "https://github.com/shaohui10086/vistashao/tree/main/content"
         Text: "Suggest Changes" # edit text
         appendFilePath: true # to append file path to Edit link
 
@@ -111,18 +111,22 @@ params:
         keys: ["title", "permalink", "summary", "content"]
 menu:
     main:
-        - identifier: categories
-          name: categories
-          url: /categories/
+        - identifier: about
+          name: about
+          url: /about/
           weight: 10
-        - identifier: tags
-          name: tags
-          url: /tags/
+        - identifier: archives
+          name: archives
+          url: /archives/
           weight: 20
-        - identifier: example
-          name: example.org
-          url: https://example.org
+        - identifier: RSS
+          name: RSS
+          url: /index.xml
           weight: 30
+        # - identifier: example
+        #   name: example.org
+        #   url: https://example.org
+        #   weight: 30
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 # pygmentsUseClasses: true
 # markup:
